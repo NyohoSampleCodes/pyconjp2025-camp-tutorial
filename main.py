@@ -1,6 +1,7 @@
 import time
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from models import (
     AVAILABLE_MODELS,
@@ -17,6 +18,15 @@ app = FastAPI(
     title="PyCon JP 2025 Camp Tutorial API",
     description="PyCon JP 2025 Camp Tutorialの API サーバー",
     version="0.1.0",
+)
+
+# CORS設定を追加
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # フロントエンドのURL
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 # 仮の認証キー（実際の運用では環境変数などから取得すべき）
